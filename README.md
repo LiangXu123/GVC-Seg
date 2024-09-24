@@ -10,10 +10,16 @@ GVC-Seg(Geometric Visual Correspondence), a novel training-free 3D instance segm
 ## Results
 
 
-## Testing Pre-trained models
+## Data preparation 
 
 
-## Generating super-pixel segmentation.
+## Scene split 
+
+
+## Two-branch proposal generation
+
+
+## Open vocabulary semantic segmentation
 
 
 ## Citation
