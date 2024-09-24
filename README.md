@@ -27,6 +27,10 @@ GVC-Seg(Geometric Visual Correspondence), a novel training-free 3D instance segm
 You can cite our work as follows.
 ```
 @article{
-      },
+      author    = {Liang Xu†, Fangjing Wang†, Jinyu Yang, Feng Zheng},
+      title     = {GVC-Seg: Training Free 3D Instance Segmentation via  Geometric Visual Correspondence.},
+      journal   = {},
+      year      = {2024},
+}
 ```
 
