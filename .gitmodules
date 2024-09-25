@@ -4,3 +4,6 @@
 [submodule "ISBNet"]
 	path = ISBNet
 	url = https://github.com/VinAIResearch/ISBNet.git
+[submodule "Open3DIS"]
+	path = Open3DIS
+	url = https://github.com/VinAIResearch/Open3DIS
