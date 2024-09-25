@@ -16,14 +16,11 @@ data:
   dataset_name: 'scannet200'
   split_path: './open3dis/dataset/scannetv2_val.txt'
   datapath: './data/Scannet200/Scannet200_2D_5interval/val' # RGB-D + pose path
-  
   gt_pth: './data/Scannet200/Scannet200_3D/val/groundtruth' # gt path
-  
   original_ply: './data/Scannet200/Scannet200_3D/val/original_ply_files' # raw pcl
   spp_path: './data/Scannet200/Scannet200_3D/val/superpoints' # spp path
-  
   cls_agnostic_3d_proposals_path: '../data/mask3d_clsagnostic_feat_scannet200_right'
-  dc_features_path: './data/Scannet200/Scannet200_3D/val/dc_feat_scannet200' # spp feature path
+  dc_features_path: '../data/mask3d_dc_feat_scannet200_right' # spp feature path
   img_dim: [640, 480] # coord alignment
   rgb_img_dim: [1296, 968]
   cut_num_pixel_boundary: 10
@@ -47,17 +44,16 @@ final_instance:
 
 exp:
   exp_name: "test"
-  mask2d_output: 'maskGdino' # 2D mask + each mask CLIP features + mask SAM score||this is setp 1 output
   grounded_feat_output: 'grounded_feat' # points - level CLIP feature, 
   clustering_3d_output: 'pure2D_cluster_rst' # 2Dlift path||this is setp 2 output
   refined_grounded_feat_output: 'refined_grounded_feat' # points - level CLIP feature, second stage feature||this is setp 3 output and is required by step 4
-  refine_score: 'mul' # mul bbox mask  
-  refined_3D_proposal: 'Mask3D_GVC_right' # points - level CLIP feature, second stage feature||this is setp 3 output and is required by step 4
-  # final_output: 'final_result_hier_agglo' #  ||this is setp 4 output, for evaluation
-  # final_output: 'final_result_hier_agglo_concat' #  ||this is setp 4 output, for evaluation
-  mapping_dir: 'tmp'
   final_output: 'tmp' #  ||this is setp 4 output, for evaluation
   save_dir: './exp'
+  
+  # FOR GVC
+  mask2d_output: 'maskGdino' # 2D mask, used to calculate the GVC score
+  gvc_method: 'mul' #  GVC calculation method
+  refined_3D_proposal: 'Mask3D_GVC_right' # GVC_OUTPUT  
   
 
 proposals:

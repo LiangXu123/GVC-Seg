@@ -29,15 +29,21 @@ python3 extract_mask3d_proposal.py
 Follow [HERE](https://github.com/VinAIResearch/Open3DIS/blob/main/docs/DATA.md), and run:
 ```
 cd ISBNet/
+OR you may also go to ./Open3DIS/segmenter3d/ISBNet and then run:
 python3 tools/test.py configs/scannet200/isbnet_scannet200.yaml ../pretrains/scannet200/head_scannetv2_200_val.pth --out ./
 ```
 
 ## Geometric Visual Correspondence calculation
+### Extract 2D SAM result from all frames in the dataset
+Follow [HERE](https://github.com/VinAIResearch/Open3DIS/blob/main/docs/RUN.md), and run:
+```
+cp tools/scannet200gvc.yaml ./Open3DIS/configs
+cd ./Open3DIS && sh scripts/grounding_2d.sh configs/scannet200gvc.yaml
+```
 Follow [HERE](https://github.com/VinAIResearch/Open3DIS), suppose you have installed Open3DIS and put it to current directory, run:
 ```
 cp tools/GVC.sh ./Open3DIS/scripts
 cp tools/GVC_*.py ./Open3DIS/tools
-cp tools/scannet200gvc.yaml ./Open3DIS/configs
 cd ./Open3DIS && sh scripts/GVC.sh
 ```
 and then you get the GVC results for each proposal, you may fuse them with NMS.
