@@ -1,0 +1,74 @@
+foundation_model:
+  grounded_config_file: './segmenter2d/GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py'
+  grounded_checkpoint: '../pretrains/foundation_models/groundingdino_swint_ogc.pth'
+  sam_checkpoint: '../pretrains/foundation_models/sam_vit_h_4b8939.pth'
+  clip_model: 'ViT-L/14@336px'
+  device: 'cuda'
+  box_threshold: 0.4
+  text_threshold: 0.4
+  clip_dim: 768
+
+
+grounded_feature:
+  granularity: 0.8 # only for SAM AutoMaskGen
+
+data:
+  dataset_name: 'scannet200'
+  split_path: './open3dis/dataset/scannetv2_val.txt'
+  datapath: './data/Scannet200/Scannet200_2D_5interval/val' # RGB-D + pose path
+  
+  gt_pth: './data/Scannet200/Scannet200_3D/val/groundtruth' # gt path
+  
+  original_ply: './data/Scannet200/Scannet200_3D/val/original_ply_files' # raw pcl
+  spp_path: './data/Scannet200/Scannet200_3D/val/superpoints' # spp path
+  
+  cls_agnostic_3d_proposals_path: '../data/mask3d_clsagnostic_feat_scannet200_right'
+  dc_features_path: './data/Scannet200/Scannet200_3D/val/dc_feat_scannet200' # spp feature path
+  img_dim: [640, 480] # coord alignment
+  rgb_img_dim: [1296, 968]
+  cut_num_pixel_boundary: 10
+  img_interval: 2
+  num_classes: 198
+
+cluster:
+  visi: 0.9 # iou
+  recall: 0.9 # recall
+  simi: 0.9 # dc_feats
+  point_visi: 0.2
+  valid_points: 50
+
+refine_grounding:
+  top_k: 10
+
+final_instance:
+  iou_overlap: 0.9
+  top_k: 300
+  scale_semantic_score: 300.0
+
+exp:
+  exp_name: "test"
+  mask2d_output: 'maskGdino' # 2D mask + each mask CLIP features + mask SAM score||this is setp 1 output
+  grounded_feat_output: 'grounded_feat' # points - level CLIP feature, 
+  clustering_3d_output: 'pure2D_cluster_rst' # 2Dlift path||this is setp 2 output
+  refined_grounded_feat_output: 'refined_grounded_feat' # points - level CLIP feature, second stage feature||this is setp 3 output and is required by step 4
+  refine_score: 'mul' # mul bbox mask  
+  refined_3D_proposal: 'Mask3D_GVC_right' # points - level CLIP feature, second stage feature||this is setp 3 output and is required by step 4
+  # final_output: 'final_result_hier_agglo' #  ||this is setp 4 output, for evaluation
+  # final_output: 'final_result_hier_agglo_concat' #  ||this is setp 4 output, for evaluation
+  mapping_dir: 'tmp'
+  final_output: 'tmp' #  ||this is setp 4 output, for evaluation
+  save_dir: './exp'
+  
+
+proposals:
+  p2d: False # 2D branch
+  p3d: True # 3D branch, False for step2, True for step4
+  agnostic: False # returning class-agnostic masks (without class + scores)
+  refined: True # feature branch, setting this True uses refined feature, else uses feature from 2D branch
+                # refer to VinAI-3DIS solution (two-stage feature): https://arxiv.org/pdf/2402.15321.pdf 
+
+evaluate:
+  evalvocab: False # AP evaluation for OV-3DIS
+  evalagnostic: False # AP evaluation for agnostic 3DIS
+
+fp16: True
