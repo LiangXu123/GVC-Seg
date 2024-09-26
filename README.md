@@ -47,6 +47,13 @@ cp tools/GVC_*.py ./Open3DIS/tools
 cd ./Open3DIS && sh scripts/GVC.sh
 ```
 and then you get the GVC results for each proposal, you may fuse them with NMS.
+## Evaluation
+### Class-agnostic Evaluation
+ Evaluate the Class-agnostic results like [this](https://github.com/VinAIResearch/Open3DIS/blob/4b05043095aff1dcbc9882799d25e0fb6f4c86a9/docs/RUN.md?plain=1#L53).
+### OV Evaluation
+For open-vocabulary semantic understanding, you may refer to [openmask3d](https://github.com/OpenMask3D/openmask3d) for CLIP feature calculation.
+
+We do not provide specific evaluation code here for simplicity.
 ## Citation
 
 You can cite our work as follows.
